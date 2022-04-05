@@ -12,10 +12,10 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 
-	webhookapi "github.com/jetstack/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
-	webhookcmd "github.com/jetstack/cert-manager/pkg/acme/webhook/cmd"
-	certmgrv1 "github.com/jetstack/cert-manager/pkg/apis/meta/v1"
-	"github.com/jetstack/cert-manager/pkg/issuer/acme/dns/util"
+	webhookapi "github.com/cert-manager/cert-manager/pkg/acme/webhook/apis/acme/v1alpha1"
+	webhookcmd "github.com/cert-manager/cert-manager/pkg/acme/webhook/cmd"
+	certmgrv1 "github.com/cert-manager/cert-manager/pkg/apis/meta/v1"
+	"github.com/cert-manager/cert-manager/pkg/issuer/acme/dns/util"
 
 	"github.com/mhenderson-so/godnsmadeeasy/src/GoDNSMadeEasy"
 )
@@ -333,9 +333,9 @@ func findTxtRecord(client *GoDNSMadeEasy.GoDMEConfig, domainID int, zone, fqdn s
 	}
 
 	for _, existingRecord := range records {
-		if existingRecord.Name  == name &&
-		   existingRecord.Type  == "TXT" &&
-		   existingRecord.Value == key {
+		if existingRecord.Name == name &&
+			existingRecord.Type == "TXT" &&
+			existingRecord.Value == key {
 			fmt.Printf("DNS record found: %v\n", existingRecord)
 			return &existingRecord
 		}
