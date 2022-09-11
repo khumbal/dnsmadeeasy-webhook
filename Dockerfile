@@ -39,4 +39,6 @@ USER nonroot:nonroot
 
 ENTRYPOINT ["/app/webhook"]
 
-LABEL org.opencontainers.image.source https://github.com/k8s-at-home/dnsmadeeasy-webhook
+ARG IMAGE_SOURCE
+#https://github.com/k8s-at-home/template-container-image
+LABEL org.opencontainers.image.source $IMAGE_SOURCE
