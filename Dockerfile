@@ -40,5 +40,4 @@ USER nonroot:nonroot
 ENTRYPOINT ["/app/webhook"]
 
 ARG IMAGE_SOURCE
-#https://github.com/k8s-at-home/template-container-image
 LABEL org.opencontainers.image.source $IMAGE_SOURCE

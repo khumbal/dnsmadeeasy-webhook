@@ -44,3 +44,11 @@ docker-build:
 # Push the docker image
 docker-push:
 	docker push ${IMG}
+
+# Build the OCI image with Podman
+podman:
+	docker build . -t ${IMG}
+
+# Push the OCI image with Podman
+podman-push:
+	docker push ${IMG}
