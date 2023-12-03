@@ -298,7 +298,7 @@ func getDomainID(client *GoDNSMadeEasy.GoDMEConfig, zone string) (int, error) {
 
 	var hostedDomain GoDNSMadeEasy.Domain
 	for _, domain := range domains {
-		if domain.Name == util.UnFqdn(authZone) {
+		if strings.HasSuffix(util.UnFqdn(authZone), domain.Name) {
 			hostedDomain = domain
 			break
 		}
