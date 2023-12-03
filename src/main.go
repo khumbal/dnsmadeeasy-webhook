@@ -333,9 +333,14 @@ func findTxtRecord(client *GoDNSMadeEasy.GoDMEConfig, domainID int, zone, fqdn s
 	}
 
 	for _, existingRecord := range records {
+		// Remove quotas from Record.Value
+		truncateStr := "\""
+		unquotedRecordValue := strings.TrimPrefix(existingRecord.Value, truncateStr)
+		unquotedRecordValue = strings.TrimSuffix(unquotedRecordValue, truncateStr)
+
 		if existingRecord.Name == name &&
 			existingRecord.Type == "TXT" &&
-			existingRecord.Value == key {
+			unquotedRecordValue == key {
 			fmt.Printf("DNS record found: %v\n", existingRecord)
 			return &existingRecord
 		}
