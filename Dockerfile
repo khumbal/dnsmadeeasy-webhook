@@ -1,10 +1,10 @@
-FROM golang:1.23@sha256:4a3c2bcd243d3dbb7b15237eecb0792db3614900037998c2cd6a579c46888c1e AS build
+FROM golang:1.23-alpine AS build
 
 WORKDIR /workspace
 ENV GO111MODULE=on
-ENV TEST_ASSET_PATH /_out/kubebuilder/bin
+ENV TEST_ASSET_PATH=/_out/kubebuilder/bin
 
-RUN apt update -qq && apt install -qq -y git bash curl g++
+RUN apk update && apk add --no-cache git bash curl g++
 
 # Fetch binary early because to allow more caching
 COPY scripts scripts
@@ -32,7 +32,7 @@ RUN  \
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM gcr.io/distroless/static:nonroot@sha256:42d15c647a762d3ce3a67eab394220f5268915d6ddba9006871e16e4698c3a24
+FROM gcr.io/distroless/static:nonroot
 WORKDIR /
 COPY --from=build /workspace/src/webhook /app/webhook
 USER nonroot:nonroot
@@ -40,4 +40,4 @@ USER nonroot:nonroot
 ENTRYPOINT ["/app/webhook"]
 
 ARG IMAGE_SOURCE
-LABEL org.opencontainers.image.source $IMAGE_SOURCE
+LABEL org.opencontainers.image.source=$IMAGE_SOURCE
